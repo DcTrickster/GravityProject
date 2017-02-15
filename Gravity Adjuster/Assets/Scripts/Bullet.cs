@@ -23,8 +23,5 @@ public class Bullet : MonoBehaviour
 		}
 	}
 
-	void OnCollisionEnter (Collider Col)
-	{
-	}
 
 }

@@ -17,7 +17,6 @@ public class Movement : MonoBehaviour
 	public KeyCode FlipKeyRight;
 
 
-
 	public float moveSpeed;
 
 	public float Gravity = 9f;
@@ -39,9 +38,18 @@ public class Movement : MonoBehaviour
 
 	public bool isPaused;
 
+	private bool Upways;
+	private bool Sideways;
+
+	public float moveHor;
+	public float moveVer;
 
 	void Start()
 	{
+
+	
+		Upways = true;
+		Sideways = false;
 		body = transform.GetComponent<Rigidbody2D>();
 		isFacingRight = true;
 		joystickNumber = gameObject.GetComponent<Movement> ().playerId.ToString ();
@@ -67,19 +75,30 @@ public class Movement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		float moveHor = Input.GetAxisRaw ("PlayerLeftJoystickHor" + joystickNumber);
-		float moveVer = Input.GetAxisRaw ("PlayerLeftJoystickVert" + joystickNumber);
+
+			moveHor = Input.GetAxisRaw ("PlayerLeftJoystickHor" + joystickNumber);
+			moveVer = Input.GetAxisRaw ("PlayerLeftJoystickVert" + joystickNumber);
+
+
+
 
 //		isGrounded = Physics2D.OverlapCircle (transform.position, groundCheckRadius, ground);
 
 		if (gameObject.GetComponent<Respawn>().Respawning == false)
 		{
+			if (Upways == true)
+			{
 			body.velocity = new Vector2 (moveHor * moveSpeed, body.velocity.y);
+			}
+			if (Sideways == true)
+			{
+			body.velocity = new Vector2 (body.velocity.x, moveVer * moveSpeed);
+			}
 
 			//CODE TO SHOOT & RECHARGE
 			if (Input.GetKeyDown (ShootKey)) 
 			{
-				if (moveVer == 1)
+				if (moveVer == 1 && Upways == true)
 				{
 					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 					bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
@@ -87,7 +106,23 @@ public class Movement : MonoBehaviour
 					StartCoroutine (recharching ());
 				}
 
-				if (moveVer == -1)
+				if (moveVer == -1 && Upways == true)
+				{
+					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+					bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
+					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+					StartCoroutine (recharching ());
+				}
+
+				if (moveHor == 1 && Sideways == true)
+				{
+					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+					bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
+					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+					StartCoroutine (recharching ());
+				}
+
+				if (moveHor == -1 && Sideways == true)
 				{
 					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 					bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
@@ -138,26 +173,32 @@ public class Movement : MonoBehaviour
 		{
 			transform.rotation = up;
 			Physics2D.gravity = new Vector2 (1f,9.8f);
+			Upways = true;
+			Sideways = false;
 		}
 
 		if (Input.GetKeyDown (FlipKeyDown))
 		{
 			transform.rotation = down;
 			Physics2D.gravity = new Vector2 (1f,-9.8f);
+			Upways = true;
+			Sideways = false;
 		}
 
 		if (Input.GetKeyDown (FlipKeyRight))
 		{
 			transform.rotation = right;
 			Physics2D.gravity = new Vector2 (200f,0f);
-
+			Upways = false;
+			Sideways = true;
 		}
 
 		if (Input.GetKeyDown (FlipKeyLeft))
 		{
 			transform.rotation = left;
 			Physics2D.gravity = new Vector2 (-200f,0f);
-//			float AltMoveHor = Input.GetAxisRaw ("GravLeft");
+			Upways = false;
+			Sideways = true;
 		}
 	}
 

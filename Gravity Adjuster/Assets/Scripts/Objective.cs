@@ -19,7 +19,7 @@ public class Objective : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
-		if (col.gameObject.tag == "Player") {
+		if (col.gameObject.tag == "Team1" || col.gameObject.tag == "Team2") {
 			if (Respawn.objectiveHeld == false){
 				Player = col.gameObject;
 				if (Player.GetComponent<Respawn> ().Respawning == false) {

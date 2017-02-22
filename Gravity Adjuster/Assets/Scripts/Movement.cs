@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour
 //	public LayerMask ground;
 
 	public GameObject Bullet;
+	public GameObject Bullet2;
 	public int shootSpeed = 50;
 	public bool recharging = false;
 
@@ -98,57 +99,101 @@ public class Movement : MonoBehaviour
 			//CODE TO SHOOT & RECHARGE
 			if (Input.GetKeyDown (ShootKey)) 
 			{
-				if (moveVer == 1 && Upways == true)
+				if (this.gameObject.tag == "Team1") 
 				{
-					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-					bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
-					StartCoroutine (recharching ());
-				}
-
-				if (moveVer == -1 && Upways == true)
-				{
-					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-					bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
-					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
-					StartCoroutine (recharching ());
-				}
-
-				if (moveHor == 1 && Sideways == true)
-				{
-					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-					bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
-					StartCoroutine (recharching ());
-				}
-
-				if (moveHor == -1 && Sideways == true)
-				{
-					GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-					bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
-					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
-					StartCoroutine (recharching ());
-				}
-
-				if (isFacingRight == true) 
-				{
-					if (recharging == false) 
-					{
+					if (moveVer == 1 && Upways == true) {
 						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * shootSpeed);
-						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
+//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
+					}
+
+					if (moveVer == -1 && Upways == true) {
+						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
+//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+						StartCoroutine (recharching ());
+					}
+
+					if (moveHor == 1 && Sideways == true) {
+						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
+//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+						StartCoroutine (recharching ());
+					}
+
+					if (moveHor == -1 && Sideways == true) {
+						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
+//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+						StartCoroutine (recharching ());
+					}
+
+					if (isFacingRight == true) {
+						if (recharging == false) {
+							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * shootSpeed);
+//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+							StartCoroutine (recharching ());
+						}
+					}
+
+					if (isFacingRight != true) {
+						if (recharging == false) {
+							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							bulletClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * shootSpeed));
+//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+							StartCoroutine (recharching ());
+						}
 					}
 				}
 
-				if (isFacingRight != true) 
+				if (this.gameObject.tag == "Team2") 
 				{
-					if (recharging == false) 
-					{
-						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * shootSpeed));
-						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+					if (moveVer == 1 && Upways == true) {
+						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
+						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
+					}
+
+					if (moveVer == -1 && Upways == true) {
+						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
+						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+						StartCoroutine (recharching ());
+					}
+
+					if (moveHor == 1 && Sideways == true) {
+						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
+						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+						StartCoroutine (recharching ());
+					}
+
+					if (moveHor == -1 && Sideways == true) {
+						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
+						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+						StartCoroutine (recharching ());
+					}
+
+					if (isFacingRight == true) {
+						if (recharging == false) {
+							GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * shootSpeed);
+							//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+							StartCoroutine (recharching ());
+						}
+					}
+
+					if (isFacingRight != true) {
+						if (recharging == false) {
+							GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							bulletClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * shootSpeed));
+							//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
+							StartCoroutine (recharching ());
+						}
 					}
 				}
 			}

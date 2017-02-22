@@ -4,6 +4,8 @@ using System.Collections;
 public class Bullet : MonoBehaviour 
 {
 	public float startTimer = 0f;
+	public GameObject team1;
+	public GameObject team2;
 
 
 	// Use this for initialization
@@ -22,6 +24,12 @@ public class Bullet : MonoBehaviour
 			Destroy (this.gameObject);
 		}
 	}
+
+	void OnCollisionEnter2D (Collision2D col)
+	{
+		Destroy (this.gameObject);
+	}
+		
 
 
 }

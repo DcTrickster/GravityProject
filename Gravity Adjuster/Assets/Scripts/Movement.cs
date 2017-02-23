@@ -18,6 +18,8 @@ public class Movement : MonoBehaviour
 
 	AudioSource Sounds;
 	public AudioClip[] gunSounds;
+	public AudioClip[] rechargeSounds;
+
 
 
 	public float moveSpeed;
@@ -105,51 +107,50 @@ public class Movement : MonoBehaviour
 			//CODE TO SHOOT & RECHARGE
 			if (Input.GetKeyDown (ShootKey)) 
 			{
-				Sounds.PlayOneShot (gunSounds [random]);
 				if (this.gameObject.tag == "Team1") 
 				{
 					if (moveVer == 1 && Upways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (moveVer == -1 && Upways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
-//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (moveHor == 1 && Sideways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (moveHor == -1 && Sideways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
-//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (isFacingRight == true) {
 						if (recharging == false) {
+							Sounds.PlayOneShot (gunSounds [random]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * shootSpeed);
-//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 							StartCoroutine (recharching ());
 						}
 					}
 
 					if (isFacingRight != true) {
 						if (recharging == false) {
+							Sounds.PlayOneShot (gunSounds [random]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							bulletClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * shootSpeed));
-//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 							StartCoroutine (recharching ());
 						}
 					}
@@ -158,47 +159,47 @@ public class Movement : MonoBehaviour
 				if (this.gameObject.tag == "Team2") 
 				{
 					if (moveVer == 1 && Upways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (moveVer == -1 && Upways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
-						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (moveHor == 1 && Sideways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (moveHor == -1 && Sideways == true) {
+						Sounds.PlayOneShot (gunSounds [random]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
-						//					Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 						StartCoroutine (recharching ());
 					}
 
 					if (isFacingRight == true) {
 						if (recharging == false) {
+							Sounds.PlayOneShot (gunSounds [random]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * shootSpeed);
-							//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 							StartCoroutine (recharching ());
 						}
 					}
 
 					if (isFacingRight != true) {
-						if (recharging == false) {
+						if (recharging == false) {				
+							Sounds.PlayOneShot (gunSounds [random]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							bulletClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * shootSpeed));
-							//						Physics2D.IgnoreCollision (bulletClone.GetComponent<Collider2D> (), GetComponent<Collider2D> ());
 							StartCoroutine (recharching ());
 						}
 					}
@@ -224,8 +225,6 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyUp))
 		{
 			transform.rotation = up;
-//			body.AddForce (transform.up * -Gravity);
-//			Physics2D.gravity = new Vector2 (1f,9.8f);
 			Upways = true;
 			Sideways = false;
 		}
@@ -233,9 +232,6 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyDown))
 		{
 			transform.rotation = down;
-//			Physics2D.gravity = new Vector2 (1f,-9.8f);
-//			body.AddForce (transform.up * Gravity);
-
 			Upways = true;
 			Sideways = false;
 		}
@@ -243,9 +239,6 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyRight))
 		{
 			transform.rotation = right;
-//			Physics2D.gravity = new Vector2 (200f,0f);
-//			body.AddForce (transform.up * Gravity);
-
 			Upways = false;
 			Sideways = true;
 		}
@@ -253,9 +246,6 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyLeft))
 		{
 			transform.rotation = left;
-//			Physics2D.gravity = new Vector2 (-200f,0f);
-//			body.AddForce (transform.up * Gravity);
-
 			Upways = false;
 			Sideways = true;
 		}
@@ -263,9 +253,12 @@ public class Movement : MonoBehaviour
 
 	public IEnumerator recharching()
 	{
+//		int random = Random.Range(0, gunSounds.Length);
+
 		recharging = true;
 		print ("Recharging is " + recharging);
-		yield return new WaitForSeconds (0.5f);
+//		Sounds.PlayOneShot (rechargeSounds [random]);
+		yield return new WaitForSeconds (1f);
 		recharging = false;
 		print ("Recharging is " + recharging);
 	}

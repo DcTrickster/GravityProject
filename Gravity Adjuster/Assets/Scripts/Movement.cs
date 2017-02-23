@@ -79,6 +79,7 @@ public class Movement : MonoBehaviour
 
 			moveHor = Input.GetAxisRaw ("PlayerLeftJoystickHor" + joystickNumber);
 			moveVer = Input.GetAxisRaw ("PlayerLeftJoystickVert" + joystickNumber);
+			body.AddForce (transform.up * -Gravity);
 
 
 
@@ -217,7 +218,8 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyUp))
 		{
 			transform.rotation = up;
-			Physics2D.gravity = new Vector2 (1f,9.8f);
+//			body.AddForce (transform.up * -Gravity);
+//			Physics2D.gravity = new Vector2 (1f,9.8f);
 			Upways = true;
 			Sideways = false;
 		}
@@ -225,7 +227,9 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyDown))
 		{
 			transform.rotation = down;
-			Physics2D.gravity = new Vector2 (1f,-9.8f);
+//			Physics2D.gravity = new Vector2 (1f,-9.8f);
+//			body.AddForce (transform.up * Gravity);
+
 			Upways = true;
 			Sideways = false;
 		}
@@ -233,7 +237,9 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyRight))
 		{
 			transform.rotation = right;
-			Physics2D.gravity = new Vector2 (200f,0f);
+//			Physics2D.gravity = new Vector2 (200f,0f);
+//			body.AddForce (transform.up * Gravity);
+
 			Upways = false;
 			Sideways = true;
 		}
@@ -241,7 +247,9 @@ public class Movement : MonoBehaviour
 		if (Input.GetKeyDown (FlipKeyLeft))
 		{
 			transform.rotation = left;
-			Physics2D.gravity = new Vector2 (-200f,0f);
+//			Physics2D.gravity = new Vector2 (-200f,0f);
+//			body.AddForce (transform.up * Gravity);
+
 			Upways = false;
 			Sideways = true;
 		}

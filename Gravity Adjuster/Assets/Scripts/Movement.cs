@@ -16,6 +16,9 @@ public class Movement : MonoBehaviour
 	public KeyCode FlipKeyLeft;
 	public KeyCode FlipKeyRight;
 
+	AudioSource Sounds;
+	public AudioClip[] gunSounds;
+
 
 	public float moveSpeed;
 
@@ -55,6 +58,8 @@ public class Movement : MonoBehaviour
 		isFacingRight = true;
 		joystickNumber = gameObject.GetComponent<Movement> ().playerId.ToString ();
 //		isPaused = gameObject.GetComponent<PauseMenu> ().isPaused;
+
+		Sounds = gameObject.GetComponent<AudioSource> ();
 	}
 
 	void Update ()
@@ -81,7 +86,7 @@ public class Movement : MonoBehaviour
 			moveVer = Input.GetAxisRaw ("PlayerLeftJoystickVert" + joystickNumber);
 			body.AddForce (transform.up * -Gravity);
 
-
+		int random = Random.Range(0, gunSounds.Length);
 
 
 //		isGrounded = Physics2D.OverlapCircle (transform.position, groundCheckRadius, ground);
@@ -100,6 +105,7 @@ public class Movement : MonoBehaviour
 			//CODE TO SHOOT & RECHARGE
 			if (Input.GetKeyDown (ShootKey)) 
 			{
+				Sounds.PlayOneShot (gunSounds [random]);
 				if (this.gameObject.tag == "Team1") 
 				{
 					if (moveVer == 1 && Upways == true) {

@@ -20,6 +20,8 @@ public class Movement : MonoBehaviour
 	public AudioClip[] gunSounds;
 	public AudioClip[] rechargeSounds;
 
+	public SpriteRenderer mySpriteRenderer;
+	public bool facingRight = false;
 
 
 	public float moveSpeed;
@@ -46,6 +48,8 @@ public class Movement : MonoBehaviour
 
 	private bool Upways;
 	private bool Sideways;
+	private bool facingUp;
+	private bool facingDown;
 
 	public float moveHor;
 	public float moveVer;
@@ -53,30 +57,55 @@ public class Movement : MonoBehaviour
 	void Start()
 	{
 
-	
+		facingUp = true;
 		Upways = true;
 		Sideways = false;
 		body = transform.GetComponent<Rigidbody2D>();
 		isFacingRight = true;
 		joystickNumber = gameObject.GetComponent<Movement> ().playerId.ToString ();
 
+		mySpriteRenderer = GetComponent<SpriteRenderer> ();
+
 		Sounds = gameObject.GetComponent<AudioSource> ();
 	}
 
 	void Update ()
 	{
-		TestfacingRight ();
+		Testflipping ();
 	}
 
-	void TestfacingRight (bool force = false)
+	void Testflipping (bool force = false)
 	{
-		if (body.velocity.x > 0 && (isFacingRight == false || force)) 
+		if (facingUp == true)
 		{
-			isFacingRight = true;
+			Debug.Log ("Facing Up");
+			if (body.velocity.x > 0 && (isFacingRight == false)) {
+				isFacingRight = true;
+				mySpriteRenderer.flipX = false;
+
+			} 
+			else if (body.velocity.x < 0 && (isFacingRight == true)) 
+			{
+				isFacingRight = false;
+				mySpriteRenderer.flipX = true;
+
+			}
 		}
-		else if (body.velocity.x < 0 && (isFacingRight == true || force))
+
+		if (facingDown == true)
 		{
-			isFacingRight = false;
+			Debug.Log ("Facing down");
+			if (body.velocity.x < 0 && (isFacingRight == false)) {
+				isFacingRight = true;
+				mySpriteRenderer.flipX = false;
+
+			} 
+			else if (body.velocity.x > 0 && (isFacingRight == true)) 
+			{
+				isFacingRight = false;
+				mySpriteRenderer.flipX = true;
+
+			}
 		}
 	}
 
@@ -227,6 +256,8 @@ public class Movement : MonoBehaviour
 			transform.rotation = up;
 			Upways = true;
 			Sideways = false;
+			facingUp = false;
+			facingDown = true;
 		}
 
 		if (Input.GetKeyDown (FlipKeyDown))
@@ -234,6 +265,8 @@ public class Movement : MonoBehaviour
 			transform.rotation = down;
 			Upways = true;
 			Sideways = false;
+			facingUp = true;
+			facingDown = false;
 		}
 
 		if (Input.GetKeyDown (FlipKeyRight))
@@ -241,6 +274,8 @@ public class Movement : MonoBehaviour
 			transform.rotation = right;
 			Upways = false;
 			Sideways = true;
+			facingUp = false;
+			facingDown = true;
 		}
 
 		if (Input.GetKeyDown (FlipKeyLeft))
@@ -248,8 +283,11 @@ public class Movement : MonoBehaviour
 			transform.rotation = left;
 			Upways = false;
 			Sideways = true;
+			facingUp = true;
+			facingDown = false;
 		}
 	}
+		
 
 	public IEnumerator recharching()
 	{

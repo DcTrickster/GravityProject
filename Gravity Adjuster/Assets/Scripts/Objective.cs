@@ -18,14 +18,14 @@ public class Objective : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter2D(Collision2D col) {
+	void OnTriggerEnter2D(Collider2D col) {
 		if (col.gameObject.tag == "Team1" || col.gameObject.tag == "Team2") {
 			if (Respawn.objectiveHeld == false){
 				Player = col.gameObject;
 				if (Player.GetComponent<Respawn> ().Respawning == false) {
 					print ("Got it");
 					Player.GetComponent<Respawn> ().hasObjective = true;
-					PlayerPos = col.collider.gameObject.transform;
+					PlayerPos = col.GetComponent<Collider2D>().gameObject.transform;
 					gameObject.transform.SetParent (PlayerPos);
 					Respawn.objectiveHeld = true;
 				}

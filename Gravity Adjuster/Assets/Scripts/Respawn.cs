@@ -13,10 +13,16 @@ public class Respawn : MonoBehaviour {
 	public float coolDown = 50f;
 	public Transform spawnPoint;
 
+	AudioSource Sounds;
+	public AudioClip respawnSound;
+
 	public int lives = 3;
 
 	// Use this for initialization
 	void Start () {
+
+		Sounds = gameObject.GetComponent<AudioSource> ();
+
 
 	}
 
@@ -38,6 +44,8 @@ public class Respawn : MonoBehaviour {
 					hasObjective = false;
 					objectiveHeld = false;
 					transform.DetachChildren ();
+					Sounds.PlayOneShot (respawnSound);
+
 				}
 				transform.position = spawnPoint.position;
 				gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
@@ -93,6 +101,7 @@ public class Respawn : MonoBehaviour {
 	public IEnumerator respawning() {
 		Respawning = true;
 		print ("Respawning is " + Respawning);
+		Sounds.PlayOneShot (respawnSound);
 		yield return new WaitForSeconds (3f);
 		Respawning = false;
 		print ("Respawning is " + Respawning);

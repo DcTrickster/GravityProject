@@ -1,4 +1,5 @@
 ﻿//Written By Saoirse﻿
+//Mostly
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -9,6 +10,16 @@ public class Goal : MonoBehaviour {
 
 	public static int RedLives = 6;
 	public static int BlueLives = 6;
+	public static int round = 1;
+	public static int redScore = 0;
+	public static int blueScore = 0;
+
+	public Text Round;
+	public Text ScoreRed;
+	public Text ScoreBlue;
+
+	public bool redWin = false;
+	public bool blueWin = false;
 
 	public Image imgRLife1, imgRLife2, imgRLife3, imgRLife4, imgRLife5, imgRLife6,
 				imgBLife1, imgBLife2, imgBLife3, imgBLife4, imgBLife5, imgBLife6;
@@ -17,9 +28,10 @@ public class Goal : MonoBehaviour {
 	public GameObject WinBlue;
 
 	public float restartDelay = 1f;
+
 	// Use this for initialization
 	void Start () {
-
+		StartCoroutine (commence ());
 	}
 
 	// Update is called once per frame
@@ -86,7 +98,17 @@ public class Goal : MonoBehaviour {
 
 		if (RedLives < 1) 
 		{
-			WinBlue.SetActive(true);
+	//		WinBlue.SetActive(true);
+			if (!blueWin) {
+				scoreBlue ();
+			}
+			if (blueScore > 1 && blueScore > redScore) {
+				WinBlue.SetActive (true);
+			}
+			else {
+				Round.text = "Round " + (round + 1).ToString ();
+			}
+			Invoke ("Restart", 2);
 		}
 
 		if (BlueLives == 5)
@@ -151,24 +173,89 @@ public class Goal : MonoBehaviour {
 
 
 		if (BlueLives < 1) {
-			WinRed.SetActive(true);
+		//	WinRed.SetActive(true);
+			if (!redWin) {
+				scoreRed ();
+			}
+			if (redScore > 1 && redScore > blueScore) {
+				WinRed.SetActive (true);
+			}
+			else {
+				Round.text = "Round " + (round + 1).ToString ();
+			}
 			Invoke ("Restart", 2);
 		}
 
 
 		if(Respawn.goal1 == true && Respawn.goal2 == false) {
-			WinRed.SetActive(true);
+		//	WinRed.SetActive(true);
+			if (!redWin) {
+				scoreRed ();
+			}
+			if (redScore > 1 && redScore > blueScore) {
+				WinRed.SetActive (true);
+			}
+			else {
+				Round.text = "Round " + (round + 1).ToString ();
+			}
+			Invoke ("Restart", 2);
 		}
 		if(Respawn.goal2 == true && Respawn.goal1 == false) {
-			WinBlue.SetActive(true);
+		//	WinBlue.SetActive(true);
+			if (!blueWin) {
+				scoreBlue ();
+			}
+			if (blueScore > 1 && blueScore > redScore) {
+				WinBlue.SetActive (true);
+			} 
+			else {
+				Round.text = "Round " + (round + 1).ToString ();
+			}
+			Invoke ("Restart", 2);
 		}
+
+		ScoreRed.text = redScore.ToString ();
+		ScoreBlue.text = blueScore.ToString ();
+
+	}
+
+	IEnumerator commence() {
+		Round.text = "Round " + round.ToString ();
+		yield return new WaitForSeconds (2);
+		Round.text = " ";
+	}
+
+	void scoreRed() {
+		redScore++;	
+		redWin = true;
+	}
+
+	void scoreBlue() {
+		blueScore++;
+		blueWin = true;
 	}
 
 	void Restart ()
 	{
+	//	Round.text = " ";
+		Respawn.goal1 = false;
+		Respawn.goal2 = false;
+
 		SceneManager.LoadScene ("Prototype");
 		RedLives = 6;
 		BlueLives = 6;
+
+		Respawn.objectiveHeld = false;
+
+		if ((redScore > 1 && redScore > blueScore) || (blueScore > 1 && blueScore > redScore)) {
+			redScore = 0;
+			blueScore = 0;
+			round = 1;
+		}
+		else {
+			round++;
+		}
+		print ("red:" + redScore + " blue:" + blueScore + " round:" + round);
 	}
 
 }

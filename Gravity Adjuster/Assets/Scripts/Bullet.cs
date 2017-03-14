@@ -17,17 +17,16 @@ public class Bullet : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		startTimer++;
 
-		if (startTimer == 50f) 
-		{
-			Destroy (this.gameObject);
-		}
 	}
 
-	void OnCollisionEnter2D (Collision2D col)
+	void OnTriggerEnter2D (Collider2D col)
 	{
-		Destroy (this.gameObject);
+		if (col.gameObject.tag == "Obstacle" || col.gameObject.tag == "Team1" || col.gameObject.tag == "Team2")
+		{
+			Debug.Log ("Hit!");
+			Destroy (this.gameObject);
+		}
 	}
 		
 

@@ -9,12 +9,15 @@ public class Movement : MonoBehaviour
 	public KeyCode LeftKey;
 	public KeyCode JumpKey;
 	public KeyCode ShootKey;
+	public KeyCode ThrowKey;
 	public KeyCode PauseKey;
 
 	public KeyCode FlipKeyUp;
 	public KeyCode FlipKeyDown;
 	public KeyCode FlipKeyLeft;
 	public KeyCode FlipKeyRight;
+
+	public Animator anim;
 
 	AudioSource Sounds;
 	public AudioClip[] gunSounds;
@@ -35,8 +38,12 @@ public class Movement : MonoBehaviour
 
 	public GameObject Bullet;
 	public GameObject Bullet2;
+	public GameObject Grenade1;
+	public GameObject Grenade2;
 	public int shootSpeed = 50;
+	public int throwSpeed = 200;
 	public bool recharging = false;
+	public int grenades;
 
 	bool isFacingRight;
 
@@ -54,6 +61,7 @@ public class Movement : MonoBehaviour
 	public float moveHor;
 	public float moveVer;
 
+
 	void Start()
 	{
 
@@ -67,6 +75,8 @@ public class Movement : MonoBehaviour
 		mySpriteRenderer = GetComponent<SpriteRenderer> ();
 
 		Sounds = gameObject.GetComponent<AudioSource> ();
+
+		grenades = 1;
 	}
 
 	void Update ()
@@ -82,12 +92,14 @@ public class Movement : MonoBehaviour
 			if (body.velocity.x > 0 && (isFacingRight == false)) {
 				isFacingRight = true;
 				mySpriteRenderer.flipX = false;
+				anim.SetBool ("PointUp", true);
 
 			} 
 			else if (body.velocity.x < 0 && (isFacingRight == true)) 
 			{
 				isFacingRight = false;
 				mySpriteRenderer.flipX = true;
+				anim.SetBool ("PointUp", true);
 
 			}
 		}
@@ -230,6 +242,45 @@ public class Movement : MonoBehaviour
 							GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							bulletClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * shootSpeed));
 							StartCoroutine (recharching ());
+						}
+					}
+				}
+			}
+
+			//THROW GRENADES
+			if (grenades > 0) {
+				if (Input.GetKeyUp (ThrowKey)) {
+					//Sounds.PlayOneShot (gunSounds [randomShoot]);
+
+					if (this.gameObject.tag == "Team1") {
+						if (isFacingRight == true) {
+							GameObject grenadeClone = GameObject.Instantiate (Grenade1, this.transform.position, Quaternion.Euler (new Vector3 (0, 1, 2))) as GameObject;
+								grenadeClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * throwSpeed);
+							grenades--;
+						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
+						}
+
+						if (isFacingRight != true) {
+								GameObject grenadeClone = GameObject.Instantiate (Grenade1, this.transform.position, Quaternion.Euler (new Vector3 (0, -1, 2))) as GameObject;
+								grenadeClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * throwSpeed));
+							grenades--;
+						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
+						}
+					}
+
+					if (this.gameObject.tag == "Team2") {
+						if (isFacingRight == true) {
+							GameObject grenadeClone = GameObject.Instantiate (Grenade2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							grenadeClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * throwSpeed);
+							grenades--;
+						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
+						}
+
+						if (isFacingRight != true) {
+							GameObject grenadeClone = GameObject.Instantiate (Grenade2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							grenadeClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * throwSpeed));
+							grenades--;
+						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
 						}
 					}
 				}

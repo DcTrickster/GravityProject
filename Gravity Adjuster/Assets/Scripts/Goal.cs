@@ -238,9 +238,19 @@ public class Goal : MonoBehaviour {
 	void Restart ()
 	{
 	//	Round.text = " ";
+//		int lvl = SceneManager.sceneLoaded;
+//		int currentLvl = 0;
+
 		Respawn.goal1 = false;
 		Respawn.goal2 = false;
-
+//		if (currentLvl = 2) {
+//			SceneManager.LoadScene (0);
+//		} 
+//		else 
+//		{
+//			SceneManager.LoadScene (lvl + 1);
+//			currentLvl++;
+//		}
 		SceneManager.LoadScene ("Prototype");
 		RedLives = 6;
 		BlueLives = 6;

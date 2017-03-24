@@ -7,7 +7,9 @@ public class SpriteFlipperParent : MonoBehaviour
 	public bool facingRight = false;
 	private Rigidbody2D body;
 
-	public SpriteRenderer mySpriteRenderer;
+	public SpriteRenderer mySpriteRendererTop;
+	public SpriteRenderer mySpriteRendererLegs;
+
 
 
 	private List<SpriteFlipperChild> flippers;
@@ -15,8 +17,9 @@ public class SpriteFlipperParent : MonoBehaviour
 	// Use this for initialization
 	void Awake () 
 	{
-		body = GetComponent<Rigidbody2D> ();
-		mySpriteRenderer = GetComponent<SpriteRenderer> ();
+		body = GetComponentInParent<Rigidbody2D> ();
+		mySpriteRendererTop = GetComponent<SpriteRenderer> ();
+		mySpriteRendererLegs = GetComponent<SpriteRenderer> ();
 
 	}
 
@@ -35,12 +38,16 @@ public class SpriteFlipperParent : MonoBehaviour
 		if (body.velocity.x > 0 && (facingRight == false || force)) 
 		{
 			facingRight = true;
-			mySpriteRenderer.flipX = false;
+			mySpriteRendererTop.flipX = false;
+			mySpriteRendererLegs.flipX = false;
+
 		}
 		else if (body.velocity.x < 0 && (facingRight == true || force))
 		{
 			facingRight = false;
-			mySpriteRenderer.flipX = true;
+			mySpriteRendererTop.flipX = true;
+			mySpriteRendererLegs.flipX = true;
+
 		}
 	}
 		

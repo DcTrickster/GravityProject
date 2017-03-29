@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Movement : MonoBehaviour 
 {
+	//Key Inputs to move
 	Rigidbody2D body;
 	public KeyCode RightKey;
 	public KeyCode LeftKey;
@@ -12,6 +13,7 @@ public class Movement : MonoBehaviour
 	public KeyCode ThrowKey;
 	public KeyCode PauseKey;
 
+	//Key Inputs to flip
 	public KeyCode FlipKeyUp;
 	public KeyCode FlipKeyDown;
 	public KeyCode FlipKeyLeft;
@@ -19,23 +21,22 @@ public class Movement : MonoBehaviour
 
 	public Animator anim;
 
+	//Audio
 	AudioSource Sounds;
 	public AudioClip[] gunSounds;
 	public AudioClip[] rechargeSounds;
 
+	//Variable to flip sprite
 	public SpriteRenderer mySpriteRenderer;
 	public bool facingRight = false;
+	bool isFacingRight;
 
 
 	public float moveSpeed;
 
 	public float Gravity = 9f;
 
-//	public float jumpForce;
-//	public bool isGrounded;
-//	float groundCheckRadius = 0.2f;
-//	public LayerMask ground;
-
+	//Variables for weapons
 	public GameObject Bullet;
 	public GameObject Bullet2;
 	public GameObject Grenade1;
@@ -43,16 +44,26 @@ public class Movement : MonoBehaviour
 	public int shootSpeed = 50;
 	public int throwSpeed = 200;
 	public bool recharging = false;
+
+	public bool grenadePickUp;
 	public int grenades;
 
-	bool isFacingRight;
+	public bool laserBeam;
+	public GameObject laser;
+	int laserLength;
 
+	public bool flameThrower;
+	public GameObject Fire;
+
+
+	//Variables for Controllers
 	public string playerId;
 	public string teamId;
 	public string joystickNumber;
 
 	public bool isPaused;
 
+	//Variables for current facing direction
 	private bool Upways;
 	private bool Sideways;
 	private bool facingUp;
@@ -77,6 +88,8 @@ public class Movement : MonoBehaviour
 		Sounds = gameObject.GetComponent<AudioSource> ();
 
 		grenades = 1;
+		laserBeam = false;
+
 	}
 
 	void Update ()
@@ -84,6 +97,7 @@ public class Movement : MonoBehaviour
 		Testflipping ();
 	}
 
+	//How to make the sprite flip
 	void Testflipping (bool force = false)
 	{
 		if (facingUp == true)
@@ -132,8 +146,7 @@ public class Movement : MonoBehaviour
 
 
 
-//		isGrounded = Physics2D.OverlapCircle (transform.position, groundCheckRadius, ground);
-
+		//How to move on walls, floor and roof
 		if (gameObject.GetComponent<Respawn>().Respawning == false)
 		{
 			if (Upways == true)
@@ -150,34 +163,44 @@ public class Movement : MonoBehaviour
 			{
 				if (this.gameObject.tag == "Team1") 
 				{
+					//Shoot Up On floor/Roof
 					if (moveVer == 1 && Upways == true) {
-						Sounds.PlayOneShot (gunSounds [randomShoot]);
-						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-						StartCoroutine (recharching ());
+						if (recharging == false) {
+							Sounds.PlayOneShot (gunSounds [randomShoot]);
+							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
+							StartCoroutine (recharching ());
+						}
 					}
-
+					//Shoot Down On floor/Roof
 					if (moveVer == -1 && Upways == true) {
+						if (recharging == false)
+						{
 						Sounds.PlayOneShot (gunSounds [randomShoot]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
 						StartCoroutine (recharching ());
+						}
 					}
-
+					//Shoot Up On Wall
 					if (moveHor == 1 && Sideways == true) {
-						Sounds.PlayOneShot (gunSounds [randomShoot]);
-						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
-						StartCoroutine (recharching ());
+						if (recharging == false) {
+							Sounds.PlayOneShot (gunSounds [randomShoot]);
+							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
+							StartCoroutine (recharching ());
+						}
 					}
-
+					//Shot Down On Wall
 					if (moveHor == -1 && Sideways == true) {
-						Sounds.PlayOneShot (gunSounds [randomShoot]);
-						GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
-						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
-						StartCoroutine (recharching ());
+						if (recharging == false) {
+							Sounds.PlayOneShot (gunSounds [randomShoot]);
+							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
+							bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
+							StartCoroutine (recharching ());
+						}
 					}
-
+					//Shoot Right
 					if (isFacingRight == true) {
 						if (recharging == false) {
 							Sounds.PlayOneShot (gunSounds [randomShoot]);
@@ -186,7 +209,7 @@ public class Movement : MonoBehaviour
 							StartCoroutine (recharching ());
 						}
 					}
-
+					//Shoot Left
 					if (isFacingRight != true) {
 						if (recharging == false) {
 							Sounds.PlayOneShot (gunSounds [randomShoot]);
@@ -199,32 +222,45 @@ public class Movement : MonoBehaviour
 
 				if (this.gameObject.tag == "Team2") 
 				{
+					
 					if (moveVer == 1 && Upways == true) {
+						if (recharging == false)
+						{
 						Sounds.PlayOneShot (gunSounds [randomShoot]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
 						StartCoroutine (recharching ());
+						}
 					}
 
 					if (moveVer == -1 && Upways == true) {
+						if (recharging == false)
+						{
 						Sounds.PlayOneShot (gunSounds [randomShoot]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
 						StartCoroutine (recharching ());
+						}
 					}
 
 					if (moveHor == 1 && Sideways == true) {
+						if (recharging == false)
+						{
 						Sounds.PlayOneShot (gunSounds [randomShoot]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (transform.up * shootSpeed);
 						StartCoroutine (recharching ());
+						}
 					}
 
 					if (moveHor == -1 && Sideways == true) {
+						if (recharging == false)
+						{
 						Sounds.PlayOneShot (gunSounds [randomShoot]);
 						GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 						bulletClone.GetComponent<Rigidbody2D> ().AddForce (-transform.up * shootSpeed);
 						StartCoroutine (recharching ());
+						}
 					}
 
 					if (isFacingRight == true) {
@@ -250,21 +286,18 @@ public class Movement : MonoBehaviour
 			//THROW GRENADES
 			if (grenades > 0) {
 				if (Input.GetKeyUp (ThrowKey)) {
-					//Sounds.PlayOneShot (gunSounds [randomShoot]);
 
 					if (this.gameObject.tag == "Team1") {
 						if (isFacingRight == true) {
 							GameObject grenadeClone = GameObject.Instantiate (Grenade1, this.transform.position, Quaternion.Euler (new Vector3 (0, 1, 2))) as GameObject;
 								grenadeClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * throwSpeed);
 							grenades--;
-						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
 						}
 
 						if (isFacingRight != true) {
 								GameObject grenadeClone = GameObject.Instantiate (Grenade1, this.transform.position, Quaternion.Euler (new Vector3 (0, -1, 2))) as GameObject;
 								grenadeClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * throwSpeed));
 							grenades--;
-						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
 						}
 					}
 
@@ -273,32 +306,65 @@ public class Movement : MonoBehaviour
 							GameObject grenadeClone = GameObject.Instantiate (Grenade2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							grenadeClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * throwSpeed);
 							grenades--;
-						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
 						}
 
 						if (isFacingRight != true) {
 							GameObject grenadeClone = GameObject.Instantiate (Grenade2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							grenadeClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * throwSpeed));
 							grenades--;
-						//	grenadeClone.GetComponent<Grenade> ().detonationTime = 3;
 						}
 					}
 				}
 			}
 		}
 
+		//LASERBEAM
+		if (laserBeam == true) 
+		{
+			print ("You have the laserbeam!");
+			if (Input.GetKeyDown (ShootKey) && laserBeam == true)
+				{
+			GameObject laserClone = Instantiate (laser, this.transform.position + new Vector3(laserLength/2, 0, 0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
+//			RaycastHit2D[] hit;
+//			hit = Physics2D.RaycastAll (this.transform.position, transform.forward);
+//			int i = 0;
+//			while (i < hit.Length) {
+//				if (hit [i] == GameObject.FindWithTag ("Obstacle")) {
+//					laserLength = (int)Mathf.Round (hit [i].distance) + 2;
+//					Vector2 scale = laserClone.transform.localScale;
+//					scale.x = (laser.transform.localScale.x) + laserLength;
+//					laserClone.transform.localScale = scale;
+//				}
+//				i++;
+			}
+			laserBeam = false;
+		}
+
+		//FLAMETHROWER
+		if (flameThrower == true) 
+		{
+			print ("You have the FlameThrower!");
+			if (Input.GetKeyDown (ShootKey) && flameThrower == true)
+			{
+//				GameObject laserClone = Instantiate (laser, this.transform.position + new Vector3(laserLength/2, 0, 0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
+				//MAKE FLAME FOR 8 SECONDS, WILL FOLLOW PLAYER
+			}
+			flameThrower = false;
+		}
+
+		//GRENADE
+		if (grenadePickUp == true) 
+		{
+			print ("You got a grenade!");
+			grenades++;
+			grenadePickUp == false;
+		}
 
 		//CHANGING THE ROTATION OF THE PLAYER
 		Quaternion up = Quaternion.Euler(0,0,180);
 		Quaternion down = Quaternion.Euler(0,0,0);
 		Quaternion right = Quaternion.Euler(0,0,90);
 		Quaternion left = Quaternion.Euler(0,0,270);
-
-		//CODE TO JUMP
-//		if (isGrounded && Input.GetKeyDown (JumpKey)) 
-//		{
-//			body.AddForce (new Vector2(0, jumpForce));
-//		}
 
 
 		//CODE TO FLIP THE GRAVITY OF THE PLAYER

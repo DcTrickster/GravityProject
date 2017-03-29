@@ -27,7 +27,8 @@ public class Movement : MonoBehaviour
 	public AudioClip[] rechargeSounds;
 
 	//Variable to flip sprite
-	public SpriteRenderer mySpriteRenderer;
+	public SpriteRenderer mySpriteRendererTop;
+	public SpriteRenderer mySpriteRendererBot;
 	public bool facingRight = false;
 	bool isFacingRight;
 
@@ -83,7 +84,8 @@ public class Movement : MonoBehaviour
 		isFacingRight = true;
 		joystickNumber = gameObject.GetComponent<Movement> ().playerId.ToString ();
 
-		mySpriteRenderer = GetComponent<SpriteRenderer> ();
+		mySpriteRendererTop = GetComponent<SpriteRenderer> ();
+		mySpriteRendererBot = GetComponent<SpriteRenderer> ();
 
 		Sounds = gameObject.GetComponent<AudioSource> ();
 
@@ -105,14 +107,16 @@ public class Movement : MonoBehaviour
 			Debug.Log ("Facing Up");
 			if (body.velocity.x > 0 && (isFacingRight == false)) {
 				isFacingRight = true;
-				mySpriteRenderer.flipX = false;
+				mySpriteRendererTop.flipX = false;
+				mySpriteRendererBot.flipX = false;
 				anim.SetBool ("PointUp", true);
 
 			} 
 			else if (body.velocity.x < 0 && (isFacingRight == true)) 
 			{
 				isFacingRight = false;
-				mySpriteRenderer.flipX = true;
+				mySpriteRendererTop.flipX = true;
+				mySpriteRendererBot.flipX = true;
 				anim.SetBool ("PointUp", true);
 
 			}
@@ -123,13 +127,15 @@ public class Movement : MonoBehaviour
 			Debug.Log ("Facing down");
 			if (body.velocity.x < 0 && (isFacingRight == false)) {
 				isFacingRight = true;
-				mySpriteRenderer.flipX = false;
+				mySpriteRendererTop.flipX = false;
+				mySpriteRendererBot.flipX = false;
 
 			} 
 			else if (body.velocity.x > 0 && (isFacingRight == true)) 
 			{
 				isFacingRight = false;
-				mySpriteRenderer.flipX = true;
+				mySpriteRendererTop.flipX = true;
+				mySpriteRendererBot.flipX = true;
 
 			}
 		}
@@ -357,7 +363,7 @@ public class Movement : MonoBehaviour
 		{
 			print ("You got a grenade!");
 			grenades++;
-			grenadePickUp == false;
+//			grenadePickUp == false;
 		}
 
 		//CHANGING THE ROTATION OF THE PLAYER

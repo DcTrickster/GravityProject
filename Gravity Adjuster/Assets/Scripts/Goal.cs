@@ -251,7 +251,7 @@ public class Goal : MonoBehaviour {
 //			SceneManager.LoadScene (lvl + 1);
 //			currentLvl++;
 //		}
-		SceneManager.LoadScene ("Prototype");
+		SceneManager.LoadScene ("Angles");
 		RedLives = 6;
 		BlueLives = 6;
 

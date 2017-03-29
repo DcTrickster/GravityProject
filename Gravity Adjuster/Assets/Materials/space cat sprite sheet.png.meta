@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: dee77306d8e50984f8bd5c4255e8c550
-timeCreated: 1490186344
+timeCreated: 1490795676
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -16,6 +16,7 @@ TextureImporter:
     21300018: space cat sprite sheet_9
     21300020: space cat sprite sheet_10
     21300022: space cat sprite sheet_11
+    21300024: space cat sprite sheet_12
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -245,6 +246,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 111
+        width: 33
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: space cat sprite sheet_12
+      rect:
+        serializedVersion: 2
+        x: 33
         y: 111
         width: 33
         height: 37

@@ -27,7 +27,6 @@ public class Grenade : MonoBehaviour {
 			col.isTrigger = true;
 			RB.constraints = RigidbodyConstraints2D.FreezePosition;
 			SR.sprite = explosion;
-			CameraShake.ShakeAmount = 2f;
 			col.radius += 0.25f;
 			if (col.radius > 5f) {
 				Destroy (this.gameObject);

@@ -15,6 +15,7 @@ public class Respawn : MonoBehaviour {
 
 	AudioSource Sounds;
 	public AudioClip respawnSound;
+	public AudioClip deathSound;
 
 	public int lives = 3;
 
@@ -100,10 +101,11 @@ public class Respawn : MonoBehaviour {
 
 	public IEnumerator respawning() {
 		Respawning = true;
+		Sounds.PlayOneShot (deathSound);
 		print ("Respawning is " + Respawning);
-		Sounds.PlayOneShot (respawnSound);
 		yield return new WaitForSeconds (3f);
 		Respawning = false;
+		Sounds.PlayOneShot (respawnSound);
 		print ("Respawning is " + Respawning);
 	}
 }

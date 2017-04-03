@@ -251,7 +251,10 @@ public class Goal : MonoBehaviour {
 //			SceneManager.LoadScene (lvl + 1);
 //			currentLvl++;
 //		}
-		SceneManager.LoadScene ("Angles");
+
+	//	SceneManager.LoadScene ("Angles");
+		int[] scenes = new int[]{1, 3, 4};
+		SceneManager.LoadScene (Random.Range(0, scenes.Length));
 		RedLives = 6;
 		BlueLives = 6;
 

@@ -96,6 +96,7 @@ public class Movement : MonoBehaviour
 
 	void Update ()
 	{
+//		Debug.DrawRay (this.transform.position, transform.right, Color.red);
 		Testflipping ();
 	}
 
@@ -325,25 +326,14 @@ public class Movement : MonoBehaviour
 		}
 
 		//LASERBEAM
-		if (laserBeam == true) 
-		{
+		if (laserBeam == true) {
 			print ("You have the laserbeam!");
-			if (Input.GetKeyDown (ShootKey) && laserBeam == true)
-				{
-			GameObject laserClone = Instantiate (laser, this.transform.position + new Vector3(laserLength/2, 0, 0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
-//			RaycastHit2D[] hit;
-//			hit = Physics2D.RaycastAll (this.transform.position, transform.forward);
-//			int i = 0;
-//			while (i < hit.Length) {
-//				if (hit [i] == GameObject.FindWithTag ("Obstacle")) {
-//					laserLength = (int)Mathf.Round (hit [i].distance) + 2;
-//					Vector2 scale = laserClone.transform.localScale;
-//					scale.x = (laser.transform.localScale.x) + laserLength;
-//					laserClone.transform.localScale = scale;
-//				}
-//				i++;
-			}
+			//		if (Input.GetKeyDown (ShootKey) && laserBeam == true)
+			//	{
+			GameObject laserClone = Instantiate (laser, this.transform.position + new Vector3 (laser.transform.localScale.x + (this.transform.localScale.x/2), 0, 0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
+			laserClone.transform.SetParent (gameObject.transform);
 			laserBeam = false;
+
 		}
 
 		//FLAMETHROWER
@@ -363,7 +353,7 @@ public class Movement : MonoBehaviour
 		{
 			print ("You got a grenade!");
 			grenades++;
-//			grenadePickUp == false;
+			grenadePickUp = false;
 		}
 
 		//CHANGING THE ROTATION OF THE PLAYER

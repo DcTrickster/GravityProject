@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
 	{
 		if (weaponSpawned == false)
 		{
-			Instantiate (guns, new Vector3 (body.transform.position.x, body.transform.position.y), guns.transform.rotation);
+			Instantiate (guns, new Vector3 (body.transform.position.x, body.transform.position.y,body.transform.position.z), guns.transform.rotation);
 		}
 	}
 

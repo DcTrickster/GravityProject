@@ -6,7 +6,7 @@ public class ButtonScript : MonoBehaviour {
 
 	public void StartGame()
 	{
-		Application.LoadLevel(1);
+		Application.LoadLevel(0);
 	}
 		
 	public void HowToPlay()
@@ -16,7 +16,7 @@ public class ButtonScript : MonoBehaviour {
 
 	public void Return()
 	{
-		Application.LoadLevel(0);
+		Application.LoadLevel(3);
 	}
 
 	public void Credits()

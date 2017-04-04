@@ -75,6 +75,8 @@ public class Respawn : MonoBehaviour {
 					hasObjective = false;
 					objectiveHeld = false;
 					heldObject.parent = null;
+					Sounds.PlayOneShot (respawnSound);
+
 				}
 				transform.position = spawnPoint.position;
 				gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
@@ -82,11 +84,17 @@ public class Respawn : MonoBehaviour {
 				Physics2D.gravity = new Vector2 (1f,-9.8f);
 
 				lives--;
-				if (gameObject.name == "Player1" || gameObject.name == "Player2") {
-					Goal.RedLives--;
+				if (gameObject.name == "Player1") {
+					Goal.P1Lives--;
 				}
-				if (gameObject.name == "Player3" || gameObject.name == "Player4") {
-					Goal.BlueLives--;
+				if (gameObject.name == "Player2") {
+					Goal.P2Lives--;
+				}
+				if (gameObject.name == "Player3") {
+					Goal.P3Lives--;
+				}
+				if (gameObject.name == "Player4") {
+					Goal.P4Lives--;
 				}
 			}
 		}

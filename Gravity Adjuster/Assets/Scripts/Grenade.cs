@@ -8,8 +8,8 @@ public class Grenade : MonoBehaviour {
 	CircleCollider2D col;
 	Rigidbody2D RB;
 	SpriteRenderer SR;
-	public Sprite explosion;
-	bool detonate;
+	public Animator anim;
+	public bool detonate;
 
 	// Use this for initialization
 	void Start () {
@@ -24,12 +24,13 @@ public class Grenade : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (detonate) { 
+			SR.enabled = false;
+			anim.SetBool ("Boom",true);
 			col.isTrigger = true;
 			RB.constraints = RigidbodyConstraints2D.FreezePosition;
-			SR.sprite = explosion;
 			CameraShake.ShakeAmount = 2f;
 			col.radius += 0.25f;
-			if (col.radius > 5f) {
+			if (col.radius > 4f) {
 				Destroy (this.gameObject);
 			}
 		}

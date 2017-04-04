@@ -18,4 +18,5 @@ public class GrenadeFolow : MonoBehaviour {
 		offSetVector = new Vector3 (Player.position.x + 0.5f, Player.position.y + 0.5f, Player.position.z);
 		transform.position += (offSetVector - transform.position) * followSpeed;
 	}
+
 }

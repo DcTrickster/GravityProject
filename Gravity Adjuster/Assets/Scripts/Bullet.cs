@@ -6,12 +6,11 @@ public class Bullet : MonoBehaviour
 	public float startTimer = 0f;
 	public GameObject team1;
 	public GameObject team2;
-
+	public GameObject GrenadeShot;
 
 	// Use this for initialization
 	void Start () 
 	{
-		
 	}
 	
 	// Update is called once per frame
@@ -26,6 +25,12 @@ public class Bullet : MonoBehaviour
 		{
 			Debug.Log ("Hit!");
 			Destroy (this.gameObject);
+		}
+
+		if (col.gameObject.name == "Grenade1" || col.gameObject.name == "Grenade2") 
+		{
+//			col.gameObject = GrenadeShot;
+			col.gameObject.GetComponent<Grenade> ().detonate = true;		
 		}
 	}
 		

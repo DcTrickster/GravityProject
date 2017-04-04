@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour {
 
+	public static int P1Lives = 3;
+	public static int P2Lives = 3;
+	public static int P3Lives = 3;
+	public static int P4Lives = 3;
+
 	public static int RedLives = 6;
 	public static int BlueLives = 6;
 	public static int round = 1;
@@ -39,65 +44,94 @@ public class Goal : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (RedLives == 5)
+		if (P1Lives == 2)
 		{
 			imgRLife1.enabled = true;
 			imgRLife2.enabled = true;
-			imgRLife3.enabled = true;
+			imgRLife3.enabled = false;
+		}
+
+		if (P1Lives == 1)
+		{
+			imgRLife1.enabled = true;
+			imgRLife2.enabled = false;
+			imgRLife3.enabled = false;
+		}
+
+		if (P1Lives == 0)
+		{
+			imgRLife1.enabled = false;
+			imgRLife2.enabled = false;
+			imgRLife3.enabled = false;
+		}
+
+		if (P2Lives == 2)
+		{
 			imgRLife4.enabled = true;
 			imgRLife5.enabled = true;
 			imgRLife6.enabled = false;
 		}
 
-		if (RedLives == 4)
+		if (P2Lives == 1)
 		{
-			imgRLife1.enabled = true;
-			imgRLife2.enabled = true;
-			imgRLife3.enabled = true;
 			imgRLife4.enabled = true;
 			imgRLife5.enabled = false;
 			imgRLife6.enabled = false;
 		}
 
-		if (RedLives == 3)
+		if (P2Lives == 0)
 		{
-			imgRLife1.enabled = true;
-			imgRLife2.enabled = true;
-			imgRLife3.enabled = true;
+
 			imgRLife4.enabled = false;
 			imgRLife5.enabled = false;
 			imgRLife6.enabled = false;
 		}
 
-		if (RedLives == 2)
+		if (P3Lives == 2)
 		{
-			imgRLife1.enabled = true;
-			imgRLife2.enabled = true;
-			imgRLife3.enabled = false;
-			imgRLife4.enabled = false;
-			imgRLife5.enabled = false;
-			imgRLife6.enabled = false;
+			imgBLife4.enabled = true;
+			imgBLife5.enabled = true;
+			imgBLife6.enabled = false;
 		}
 
-		if (RedLives == 1)
+		if (P3Lives == 1)
 		{
-			imgRLife1.enabled = true;
-			imgRLife2.enabled = false;
-			imgRLife3.enabled = false;
-			imgRLife4.enabled = false;
-			imgRLife5.enabled = false;
-			imgRLife6.enabled = false;
+			imgBLife4.enabled = true;
+			imgBLife5.enabled = false;
+			imgBLife6.enabled = false;
 		}
 
-		if (RedLives == 0)
+		if (P3Lives == 0)
+		{
+
+			imgBLife4.enabled = false;
+			imgBLife5.enabled = false;
+			imgBLife6.enabled = false;
+		}
+
+		if (P4Lives == 2)
 		{
 			imgRLife1.enabled = false;
-			imgRLife2.enabled = false;
-			imgRLife3.enabled = false;
-			imgRLife4.enabled = false;
-			imgRLife5.enabled = false;
-			imgRLife6.enabled = false;
+			imgRLife2.enabled = true;
+			imgRLife3.enabled = true;
 		}
+
+		if (P4Lives == 1)
+		{
+			imgBLife1.enabled = false;
+			imgBLife2.enabled = false;
+			imgBLife3.enabled = true;
+		}
+
+		if (P4Lives == 0)
+		{
+			imgBLife1.enabled = false;
+			imgBLife2.enabled = false;
+			imgBLife3.enabled = false;
+		}
+
+
+
 
 		if (RedLives < 1) 
 		{
@@ -115,12 +149,12 @@ public class Goal : MonoBehaviour {
 
 		if (BlueLives == 5)
 		{
-			imgRLife1.enabled = true;
-			imgRLife2.enabled = true;
-			imgRLife3.enabled = true;
-			imgRLife4.enabled = true;
-			imgRLife5.enabled = true;
-			imgRLife6.enabled = false;
+			imgBLife1.enabled = true;
+			imgBLife2.enabled = true;
+			imgBLife3.enabled = true;
+			imgBLife4.enabled = true;
+			imgBLife5.enabled = true;
+			imgBLife6.enabled = false;
 		}
 
 		if (BlueLives == 4)

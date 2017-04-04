@@ -62,6 +62,8 @@ public class Movement : MonoBehaviour
 	public string teamId;
 	public string joystickNumber;
 
+	float deadzone = 0.25f;
+
 	public bool isPaused;
 
 	//Variables for current facing direction
@@ -91,7 +93,7 @@ public class Movement : MonoBehaviour
 
 		grenades = 1;
 		laserBeam = false;
-
+		flameThrower = false;
 	}
 
 	void Update ()
@@ -148,6 +150,12 @@ public class Movement : MonoBehaviour
 			moveHor = Input.GetAxisRaw ("PlayerLeftJoystickHor" + joystickNumber);
 			moveVer = Input.GetAxisRaw ("PlayerLeftJoystickVert" + joystickNumber);
 			body.AddForce (transform.up * -Gravity);
+
+		Vector2 stickInput = new Vector2 (moveHor, moveVer);
+		if (Mathf.Abs (stickInput.x) < deadzone)
+			stickInput.x = 0.0f;
+		if (Mathf.Abs (stickInput.y) < deadzone)
+			stickInput.y = 0.0f;
 
 		int randomShoot = Random.Range(0, gunSounds.Length);
 
@@ -342,7 +350,7 @@ public class Movement : MonoBehaviour
 			print ("You have the FlameThrower!");
 			if (Input.GetKeyDown (ShootKey) && flameThrower == true)
 			{
-//				GameObject laserClone = Instantiate (laser, this.transform.position + new Vector3(laserLength/2, 0, 0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
+//				GameObject flameClone = Instantiate (flameThrower, this.transform.position, new Vector3 (this.transform.position * 2,0,0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
 				//MAKE FLAME FOR 8 SECONDS, WILL FOLLOW PLAYER
 			}
 			flameThrower = false;

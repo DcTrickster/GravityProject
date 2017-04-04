@@ -17,6 +17,8 @@ public class Goal : MonoBehaviour {
 	public Text Round;
 	public Text ScoreRed;
 	public Text ScoreBlue;
+	public Image winRedImg;
+	public Image winBlueImg;
 
 	public bool redWin = false;
 	public bool blueWin = false;
@@ -32,6 +34,9 @@ public class Goal : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StartCoroutine (commence ());
+
+		winRedImg.enabled = false;
+		winBlueImg.enabled = false;
 	}
 
 	// Update is called once per frame

@@ -28,5 +28,5 @@ public class ButtonScript : MonoBehaviour {
 	{
 		Application.Quit();
 	}
-
+		
 }

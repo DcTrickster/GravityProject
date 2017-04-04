@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour 
 {
@@ -48,6 +49,8 @@ public class Movement : MonoBehaviour
 
 	public bool grenadePickUp;
 	public int grenades;
+	public string grenadeCount;
+	public TextMesh grenadeAmount;
 
 	public bool laserBeam;
 	public GameObject laser;
@@ -92,6 +95,8 @@ public class Movement : MonoBehaviour
 		Sounds = gameObject.GetComponent<AudioSource> ();
 
 		grenades = 1;
+		grenadeAmount.text = null;
+
 		laserBeam = false;
 		flameThrower = false;
 	}
@@ -112,7 +117,7 @@ public class Movement : MonoBehaviour
 				isFacingRight = true;
 				mySpriteRendererTop.flipX = false;
 				mySpriteRendererBot.flipX = false;
-				anim.SetBool ("PointUp", true);
+
 
 			} 
 			else if (body.velocity.x < 0 && (isFacingRight == true)) 
@@ -120,7 +125,7 @@ public class Movement : MonoBehaviour
 				isFacingRight = false;
 				mySpriteRendererTop.flipX = true;
 				mySpriteRendererBot.flipX = true;
-				anim.SetBool ("PointUp", true);
+
 
 			}
 		}
@@ -128,10 +133,12 @@ public class Movement : MonoBehaviour
 		if (facingDown == true)
 		{
 			Debug.Log ("Facing down");
-			if (body.velocity.x < 0 && (isFacingRight == false)) {
+			if (body.velocity.x < 0 && (isFacingRight == false)) 
+			{
 				isFacingRight = true;
 				mySpriteRendererTop.flipX = false;
 				mySpriteRendererBot.flipX = false;
+
 
 			} 
 			else if (body.velocity.x > 0 && (isFacingRight == true)) 
@@ -151,6 +158,8 @@ public class Movement : MonoBehaviour
 			moveVer = Input.GetAxisRaw ("PlayerLeftJoystickVert" + joystickNumber);
 			body.AddForce (transform.up * -Gravity);
 
+
+
 		Vector2 stickInput = new Vector2 (moveHor, moveVer);
 		if (Mathf.Abs (stickInput.x) < deadzone)
 			stickInput.x = 0.0f;
@@ -167,10 +176,14 @@ public class Movement : MonoBehaviour
 			if (Upways == true)
 			{
 			body.velocity = new Vector2 (moveHor * moveSpeed, body.velocity.y);
+				anim.SetFloat ("hSpeed", moveHor);
+				anim.SetFloat ("vSpeed", moveVer);
 			}
 			if (Sideways == true)
 			{
 			body.velocity = new Vector2 (body.velocity.x, moveVer * moveSpeed);
+				anim.SetFloat ("hSpeed", moveVer);
+				anim.SetFloat ("vSpeed", moveHor);
 			}
 
 			//CODE TO SHOOT & RECHARGE
@@ -307,12 +320,18 @@ public class Movement : MonoBehaviour
 							GameObject grenadeClone = GameObject.Instantiate (Grenade1, this.transform.position, Quaternion.Euler (new Vector3 (0, 1, 2))) as GameObject;
 								grenadeClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * throwSpeed);
 							grenades--;
+							grenadeAmount.text = grenades.ToString();
+							StartCoroutine (grenadeCounts ());
+
 						}
 
 						if (isFacingRight != true) {
 								GameObject grenadeClone = GameObject.Instantiate (Grenade1, this.transform.position, Quaternion.Euler (new Vector3 (0, -1, 2))) as GameObject;
 								grenadeClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * throwSpeed));
 							grenades--;
+							grenadeAmount.text = grenades.ToString();
+							StartCoroutine (grenadeCounts ());
+
 						}
 					}
 
@@ -321,12 +340,18 @@ public class Movement : MonoBehaviour
 							GameObject grenadeClone = GameObject.Instantiate (Grenade2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							grenadeClone.GetComponent<Rigidbody2D> ().AddForce (transform.right * throwSpeed);
 							grenades--;
+							grenadeAmount.text = grenades.ToString();
+							StartCoroutine (grenadeCounts ());
+
 						}
 
 						if (isFacingRight != true) {
 							GameObject grenadeClone = GameObject.Instantiate (Grenade2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
 							grenadeClone.GetComponent<Rigidbody2D> ().AddForce (-(transform.right * throwSpeed));
 							grenades--;
+							grenadeAmount.text = grenades.ToString();
+							StartCoroutine (grenadeCounts ());
+
 						}
 					}
 				}
@@ -361,7 +386,10 @@ public class Movement : MonoBehaviour
 		{
 			print ("You got a grenade!");
 			grenades++;
+			grenadeAmount.text = grenades.ToString();
+			StartCoroutine (grenadeCounts ());
 			grenadePickUp = false;
+
 		}
 
 		//CHANGING THE ROTATION OF THE PLAYER
@@ -420,5 +448,13 @@ public class Movement : MonoBehaviour
 		yield return new WaitForSeconds (1f);
 		recharging = false;
 		print ("Recharging is " + recharging);
+	}
+
+	public IEnumerator grenadeCounts()
+	{
+		grenadeAmount.text = grenades.ToString();
+		yield return new WaitForSeconds (1f);
+		grenadeAmount.text = null;
+
 	}
 }

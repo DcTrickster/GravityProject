@@ -26,8 +26,6 @@ public class Goal : MonoBehaviour {
 	public Image imgRLife1, imgRLife2, imgRLife3, imgRLife4, imgRLife5, imgRLife6,
 				imgBLife1, imgBLife2, imgBLife3, imgBLife4, imgBLife5, imgBLife6;
 
-	public GameObject WinRed;
-	public GameObject WinBlue;
 
 	public float restartDelay = 1f;
 
@@ -108,7 +106,6 @@ public class Goal : MonoBehaviour {
 				scoreBlue ();
 			}
 			if (blueScore > 1 && blueScore > redScore) {
-				WinBlue.SetActive (true);
 			}
 			else {
 				Round.text = "Round " + (round + 1).ToString ();
@@ -183,7 +180,6 @@ public class Goal : MonoBehaviour {
 				scoreRed ();
 			}
 			if (redScore > 1 && redScore > blueScore) {
-				WinRed.SetActive (true);
 			}
 			else {
 				Round.text = "Round " + (round + 1).ToString ();
@@ -197,8 +193,10 @@ public class Goal : MonoBehaviour {
 			if (!redWin) {
 				scoreRed ();
 			}
-			if (redScore > 1 && redScore > blueScore) {
-				WinRed.SetActive (true);
+			if (redScore > 1 && redScore > blueScore) 
+			{
+				winRedImg.enabled = true;
+
 			}
 			else {
 				Round.text = "Round " + (round + 1).ToString ();
@@ -211,7 +209,8 @@ public class Goal : MonoBehaviour {
 				scoreBlue ();
 			}
 			if (blueScore > 1 && blueScore > redScore) {
-				WinBlue.SetActive (true);
+				winBlueImg.enabled = true;
+
 			} 
 			else {
 				Round.text = "Round " + (round + 1).ToString ();
@@ -240,22 +239,12 @@ public class Goal : MonoBehaviour {
 		blueWin = true;
 	}
 
+
 	void Restart ()
 	{
-	//	Round.text = " ";
-//		int lvl = SceneManager.sceneLoaded;
-//		int currentLvl = 0;
 
 		Respawn.goal1 = false;
 		Respawn.goal2 = false;
-//		if (currentLvl = 2) {
-//			SceneManager.LoadScene (0);
-//		} 
-//		else 
-//		{
-//			SceneManager.LoadScene (lvl + 1);
-//			currentLvl++;
-//		}
 
 	//	SceneManager.LoadScene ("Angles");
 		int[] scenes = new int[]{1, 2, 3};

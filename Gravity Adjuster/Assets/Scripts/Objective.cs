@@ -27,6 +27,7 @@ public class Objective : MonoBehaviour {
 					Player.GetComponent<Respawn> ().hasObjective = true;
 					PlayerPos = col.GetComponent<Collider2D>().gameObject.transform;
 					gameObject.transform.SetParent (PlayerPos);
+					this.transform.localPosition = Vector2.zero + new Vector2(0,0.35f);
 					Respawn.objectiveHeld = true;
 				}
 			}

@@ -18,8 +18,8 @@ public class SpriteFlipperParent : MonoBehaviour
 	void Awake () 
 	{
 		body = GetComponentInParent<Rigidbody2D> ();
-		mySpriteRendererTop = GetComponent<SpriteRenderer> ();
-		mySpriteRendererLegs = GetComponent<SpriteRenderer> ();
+//		mySpriteRendererTop = GetComponent<SpriteRenderer> ();
+//		mySpriteRendererLegs = GetComponent<SpriteRenderer> ();
 
 	}
 
@@ -30,7 +30,7 @@ public class SpriteFlipperParent : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		TestfacingRight ();
+//		TestfacingRight ();
 	}
 
 	void TestfacingRight (bool force = false)

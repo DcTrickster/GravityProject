@@ -12,6 +12,7 @@ public class Respawn : MonoBehaviour {
 	public bool Respawning = false;
 	public float coolDown = 50f;
 	public Transform spawnPoint;
+	public Transform heldObject;
 
 	AudioSource Sounds;
 	public AudioClip respawnSound;
@@ -29,6 +30,9 @@ public class Respawn : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		heldObject = transform.FindChild ("Objective");
+
 		if(lives < 1){
 			Destroy (this.gameObject);
 		}
@@ -44,7 +48,7 @@ public class Respawn : MonoBehaviour {
 				if (hasObjective) {
 					hasObjective = false;
 					objectiveHeld = false;
-					transform.DetachChildren ();
+					heldObject.parent = null;
 					Sounds.PlayOneShot (respawnSound);
 
 				}
@@ -70,7 +74,7 @@ public class Respawn : MonoBehaviour {
 				if (hasObjective) {
 					hasObjective = false;
 					objectiveHeld = false;
-					transform.DetachChildren ();
+					heldObject.parent = null;
 				}
 				transform.position = spawnPoint.position;
 				gameObject.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;

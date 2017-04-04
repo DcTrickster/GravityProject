@@ -72,11 +72,13 @@ public class Movement : MonoBehaviour
 	//Variables for current facing direction
 	private bool Upways;
 	private bool Sideways;
+	private bool UpSideDown;
 	private bool facingUp;
 	private bool facingDown;
 
 	public float moveHor;
 	public float moveVer;
+	public float fallVelocity;
 
 
 	void Start()
@@ -103,53 +105,9 @@ public class Movement : MonoBehaviour
 
 	void Update ()
 	{
-//		Debug.DrawRay (this.transform.position, transform.right, Color.red);
-		Testflipping ();
+
 	}
 
-	//How to make the sprite flip
-	void Testflipping (bool force = false)
-	{
-		if (facingUp == true)
-		{
-			Debug.Log ("Facing Up");
-			if (body.velocity.x > 0 && (isFacingRight == false)) {
-				isFacingRight = true;
-				mySpriteRendererTop.flipX = false;
-				mySpriteRendererBot.flipX = false;
-
-
-			} 
-			else if (body.velocity.x < 0 && (isFacingRight == true)) 
-			{
-				isFacingRight = false;
-				mySpriteRendererTop.flipX = true;
-				mySpriteRendererBot.flipX = true;
-
-
-			}
-		}
-
-		if (facingDown == true)
-		{
-			Debug.Log ("Facing down");
-			if (body.velocity.x < 0 && (isFacingRight == false)) 
-			{
-				isFacingRight = true;
-				mySpriteRendererTop.flipX = false;
-				mySpriteRendererBot.flipX = false;
-
-
-			} 
-			else if (body.velocity.x > 0 && (isFacingRight == true)) 
-			{
-				isFacingRight = false;
-				mySpriteRendererTop.flipX = true;
-				mySpriteRendererBot.flipX = true;
-
-			}
-		}
-	}
 
 	void FixedUpdate()
 	{
@@ -157,8 +115,6 @@ public class Movement : MonoBehaviour
 			moveHor = Input.GetAxisRaw ("PlayerLeftJoystickHor" + joystickNumber);
 			moveVer = Input.GetAxisRaw ("PlayerLeftJoystickVert" + joystickNumber);
 			body.AddForce (transform.up * -Gravity);
-
-
 
 		Vector2 stickInput = new Vector2 (moveHor, moveVer);
 		if (Mathf.Abs (stickInput.x) < deadzone)
@@ -177,13 +133,27 @@ public class Movement : MonoBehaviour
 			{
 			body.velocity = new Vector2 (moveHor * moveSpeed, body.velocity.y);
 				anim.SetFloat ("hSpeed", moveHor);
+				if (UpSideDown == true) 
+				{
+					anim.SetFloat ("hSpeed", -moveHor);
+				} 
+				else 
+				{
+					anim.SetFloat ("hSpeed",moveHor);
+				}
 				anim.SetFloat ("vSpeed", moveVer);
+
 			}
 			if (Sideways == true)
 			{
 			body.velocity = new Vector2 (body.velocity.x, moveVer * moveSpeed);
 				anim.SetFloat ("hSpeed", moveVer);
 				anim.SetFloat ("vSpeed", moveHor);
+			}
+
+			if (moveHor < 0) 
+			{
+				isFacingRight = false;
 			}
 
 			//CODE TO SHOOT & RECHARGE
@@ -229,7 +199,7 @@ public class Movement : MonoBehaviour
 						}
 					}
 					//Shoot Right
-					if (isFacingRight == true) {
+					if (moveHor > 0) {
 						if (recharging == false) {
 							Sounds.PlayOneShot (gunSounds [randomShoot]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
@@ -238,7 +208,7 @@ public class Movement : MonoBehaviour
 						}
 					}
 					//Shoot Left
-					if (isFacingRight != true) {
+					if (moveHor < 0) {
 						if (recharging == false) {
 							Sounds.PlayOneShot (gunSounds [randomShoot]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
@@ -291,7 +261,7 @@ public class Movement : MonoBehaviour
 						}
 					}
 
-					if (isFacingRight == true) {
+					if (moveHor > 0) {
 						if (recharging == false) {
 							Sounds.PlayOneShot (gunSounds [randomShoot]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
@@ -300,7 +270,7 @@ public class Movement : MonoBehaviour
 						}
 					}
 
-					if (isFacingRight != true) {
+					if (moveHor < 0) {
 						if (recharging == false) {				
 							Sounds.PlayOneShot (gunSounds [randomShoot]);
 							GameObject bulletClone = GameObject.Instantiate (Bullet2, this.transform.position, Quaternion.Euler (new Vector3 (0, 0, 1))) as GameObject;
@@ -359,27 +329,27 @@ public class Movement : MonoBehaviour
 		}
 
 		//LASERBEAM
-		if (laserBeam == true) {
-			print ("You have the laserbeam!");
-			//		if (Input.GetKeyDown (ShootKey) && laserBeam == true)
-			//	{
-			GameObject laserClone = Instantiate (laser, this.transform.position + new Vector3 (laser.transform.localScale.x + (this.transform.localScale.x/2), 0, 0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
-			laserClone.transform.SetParent (gameObject.transform);
-			laserBeam = false;
+//		if (laserBeam == true) {
+//			print ("You have the laserbeam!");
+//			//		if (Input.GetKeyDown (ShootKey) && laserBeam == true)
+//			//	{
+//			GameObject laserClone = Instantiate (laser, this.transform.position + new Vector3 (laser.transform.localScale.x + (this.transform.localScale.x/2), 0, 0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
+//			laserClone.transform.SetParent (gameObject.transform);
+//			laserBeam = false;
 
-		}
+//		}
 
 		//FLAMETHROWER
-		if (flameThrower == true) 
-		{
-			print ("You have the FlameThrower!");
-			if (Input.GetKeyDown (ShootKey) && flameThrower == true)
-			{
+//		if (flameThrower == true) 
+//		{
+//			print ("You have the FlameThrower!");
+//			if (Input.GetKeyDown (ShootKey) && flameThrower == true)
+//			{
 //				GameObject flameClone = Instantiate (flameThrower, this.transform.position, new Vector3 (this.transform.position * 2,0,0), Quaternion.Euler (new Vector3 (0, 0, 1)), this.gameObject.transform) as GameObject;
-				//MAKE FLAME FOR 8 SECONDS, WILL FOLLOW PLAYER
-			}
-			flameThrower = false;
-		}
+//				MAKE FLAME FOR 8 SECONDS, WILL FOLLOW PLAYER
+//			}
+//			flameThrower = false;
+//		}
 
 		//GRENADE
 		if (grenadePickUp == true) 
@@ -407,6 +377,7 @@ public class Movement : MonoBehaviour
 			Sideways = false;
 			facingUp = false;
 			facingDown = true;
+			UpSideDown = true;
 		}
 
 		if (Input.GetKeyDown (FlipKeyDown))
@@ -416,6 +387,8 @@ public class Movement : MonoBehaviour
 			Sideways = false;
 			facingUp = true;
 			facingDown = false;
+			UpSideDown = false;
+
 		}
 
 		if (Input.GetKeyDown (FlipKeyRight))
@@ -425,6 +398,8 @@ public class Movement : MonoBehaviour
 			Sideways = true;
 			facingUp = false;
 			facingDown = true;
+			UpSideDown = false;
+
 		}
 
 		if (Input.GetKeyDown (FlipKeyLeft))
@@ -434,6 +409,8 @@ public class Movement : MonoBehaviour
 			Sideways = true;
 			facingUp = true;
 			facingDown = false;
+			UpSideDown = false;
+
 		}
 	}
 		

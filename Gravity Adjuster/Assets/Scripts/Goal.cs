@@ -13,6 +13,12 @@ public class Goal : MonoBehaviour {
 	public static int P3Lives = 3;
 	public static int P4Lives = 3;
 
+	private bool P1Dead;
+	private bool P2Dead;
+	private bool P3Dead;
+	private bool P4Dead;
+
+
 	public static int RedLives = 6;
 	public static int BlueLives = 6;
 	public static int round = 1;
@@ -63,6 +69,7 @@ public class Goal : MonoBehaviour {
 			imgRLife1.enabled = false;
 			imgRLife2.enabled = false;
 			imgRLife3.enabled = false;
+			P1Dead = true;
 		}
 
 		if (P2Lives == 2)
@@ -85,6 +92,7 @@ public class Goal : MonoBehaviour {
 			imgRLife4.enabled = false;
 			imgRLife5.enabled = false;
 			imgRLife6.enabled = false;
+			P2Dead = true;
 		}
 
 		if (P3Lives == 2)
@@ -107,6 +115,8 @@ public class Goal : MonoBehaviour {
 			imgBLife4.enabled = false;
 			imgBLife5.enabled = false;
 			imgBLife6.enabled = false;
+			P3Dead = true;
+
 		}
 
 		if (P4Lives == 2)
@@ -128,12 +138,13 @@ public class Goal : MonoBehaviour {
 			imgBLife1.enabled = false;
 			imgBLife2.enabled = false;
 			imgBLife3.enabled = false;
+			P4Dead = true;
 		}
 
 
 
 
-		if (RedLives < 1) 
+		if (P1Dead == true && P2Dead == true) 
 		{
 	//		WinBlue.SetActive(true);
 			if (!blueWin) {
@@ -147,68 +158,9 @@ public class Goal : MonoBehaviour {
 			Invoke ("Restart", 2);
 		}
 
-		if (BlueLives == 5)
-		{
-			imgBLife1.enabled = true;
-			imgBLife2.enabled = true;
-			imgBLife3.enabled = true;
-			imgBLife4.enabled = true;
-			imgBLife5.enabled = true;
-			imgBLife6.enabled = false;
-		}
-
-		if (BlueLives == 4)
-		{
-			imgBLife1.enabled = true;
-			imgBLife2.enabled = true;
-			imgBLife3.enabled = true;
-			imgBLife4.enabled = true;
-			imgBLife5.enabled = false;
-			imgBLife6.enabled = false;
-		}
-
-		if (BlueLives == 3)
-		{
-			imgBLife1.enabled = true;
-			imgBLife2.enabled = true;
-			imgBLife3.enabled = true;
-			imgBLife4.enabled = false;
-			imgBLife5.enabled = false;
-			imgBLife6.enabled = false;
-		}
-
-		if (BlueLives == 2)
-		{
-			imgBLife1.enabled = true;
-			imgBLife2.enabled = true;
-			imgBLife3.enabled = false;
-			imgBLife4.enabled = false;
-			imgBLife5.enabled = false;
-			imgBLife6.enabled = false;
-		}
-
-		if (BlueLives == 1)
-		{
-			imgBLife1.enabled = true;
-			imgBLife2.enabled = false;
-			imgBLife3.enabled = false;
-			imgBLife4.enabled = false;
-			imgBLife5.enabled = false;
-			imgBLife6.enabled = false;
-		}
-
-		if (BlueLives == 0)
-		{
-			imgBLife1.enabled = false;
-			imgBLife2.enabled = false;
-			imgBLife3.enabled = false;
-			imgBLife4.enabled = false;
-			imgBLife5.enabled = false;
-			imgBLife6.enabled = false;
-		}
 
 
-		if (BlueLives < 1) {
+		if (P3Dead == true && P4Dead == true) {
 		//	WinRed.SetActive(true);
 			if (!redWin) {
 				scoreRed ();

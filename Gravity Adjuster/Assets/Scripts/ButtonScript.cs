@@ -11,7 +11,7 @@ public class ButtonScript : MonoBehaviour {
 		
 	public void HowToPlay()
 	{
-		Application.LoadLevel(3);
+		Application.LoadLevel(4);
 	}
 
 	public void Return()
@@ -21,7 +21,7 @@ public class ButtonScript : MonoBehaviour {
 
 	public void Credits()
 	{
-		Application.LoadLevel(2);
+		Application.LoadLevel(5);
 	}
 
 	public void Quit()
